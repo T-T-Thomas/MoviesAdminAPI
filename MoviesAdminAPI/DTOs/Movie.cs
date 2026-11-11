@@ -10,6 +10,8 @@
         public double RunTime { get; set; }
 
         public Genre Genre { get; set; } = null!;
+        
+        public AudienceRating AudienceRating { get; set; } = null!;
 
         public DateTime ReleaseDate { get; set; }
 

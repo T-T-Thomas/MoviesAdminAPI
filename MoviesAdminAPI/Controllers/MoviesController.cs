@@ -24,15 +24,17 @@ namespace MoviesAdminAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Movie>>> GetAllMovies()
         {
-            var sql = "SELECT m.*,g.*" +
+            var sql = "SELECT m.*,g.*,r.* " +
                 "FROM Movie m " +
-                "INNER JOIN Genres g ON m.GenreId = g.Id";
+                "INNER JOIN dbo.Genres G on G.Id = m.GenreId " +
+                "INNER JOIN dbo.AudienceRatings r on r.Id = m.AudienceRatingId";
 
 
             //Retrieve all movies from the database or any data source
-            var movies = await _db.QueryAsync<Movie, Genre, Movie>(sql, (movie, genre) =>
+            var movies = await _db.QueryAsync<Movie, Genre, AudienceRating, Movie>(sql, (movie, genre, audienceRating) =>
             {
                 movie.Genre = genre;
+                movie.AudienceRating = audienceRating;
                 return movie;
             });
             return Ok(movies);
