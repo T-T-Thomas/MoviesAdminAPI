@@ -1,4 +1,6 @@
-﻿namespace MoviesAdminAPI.DTOs
+﻿using System.Text.Json.Serialization;
+
+namespace MoviesAdminAPI.DTOs
 {
     public class Movie
     {
@@ -16,5 +18,8 @@
         public DateTime ReleaseDate { get; set; }
 
         public string? ImageUrl { get; set; } = string.Empty;
+
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public List<Review> Reviews { get; set; } = null;
     }
 }
